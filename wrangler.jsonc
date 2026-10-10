@@ -10,8 +10,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "whd-db",
-      "database_id": "462580d7-c6c1-4bd7-b887-40d3849733e1",
+      "database_name": "whd-test-d",
+      "database_id": "7a96f83f-95c6-4306-80b9-7f399c3bd74b",
       "migrations_dir": "drizzle",
     },
   ],
