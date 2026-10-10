@@ -42,7 +42,7 @@ function LandingPage() {
   const { session, nextStep } = Route.useLoaderData();
 
   return (
-    <div className="bg-whd-dark whd-grid-bg relative min-h-screen">
+    <div className="bg-whd-dark whd-grid-bg relative min-h-screen overflow-clip">
       {/* Neon star cursor trail — mouse only */}
       <StarTrail />
 

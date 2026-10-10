@@ -74,9 +74,11 @@
 
 /* ===== Base Styles ===== */
 
+/* `clip`, not `hidden`: hidden on body turns it into a second scroll container
+   (overflow-y computes to auto), so the wheel scrolls body a few px before the page. */
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
   /* Offset anchor scrolling so sections clear the fixed header */
   scroll-padding-top: 7rem;
 }
@@ -84,7 +86,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
   font-family: var(--font-sans);
   background-color: var(--whd-dark);
   color: var(--whd-text);
