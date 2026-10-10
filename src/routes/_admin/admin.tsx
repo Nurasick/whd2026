@@ -69,6 +69,7 @@ const PARTICIPANT_COLS: readonly ParticipantCol[] = [
   'city',
   'placeOfStudy',
   'educationLevel',
+  'cvUrl',
   'teamName',
   'attended',
   'createdAt',
@@ -385,6 +386,22 @@ function AdminPage() {
                   {pv.educationLevel && (
                     <td className="px-4 py-3 whitespace-nowrap">
                       {t(`education.${p.educationLevel}`)}
+                    </td>
+                  )}
+                  {pv.cvUrl && (
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      {p.cvUrl ? (
+                        <a
+                          href={p.cvUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-whd-pink-soft hover:text-whd-pink-bright hover:underline"
+                        >
+                          {t('admin.cvOpen')}
+                        </a>
+                      ) : (
+                        <span className="text-whd-text-dim">—</span>
+                      )}
                     </td>
                   )}
                   {pv.teamName && (

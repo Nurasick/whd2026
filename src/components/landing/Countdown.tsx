@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { REGISTRATION_DEADLINE } from '@/lib/event';
 import { NeonFrame, NeonPanel } from '@/components/ui/neon';
 
 type TimeLeft = {
@@ -37,9 +36,16 @@ function russianPlural(n: number, one: string, few: string, many: string): strin
   return many;
 }
 
-export default function Countdown() {
+/** Counts down to `deadline` (an ISO instant); calls `onElapsed` once it passes. */
+export default function Countdown({
+  deadline,
+  onElapsed,
+}: {
+  deadline: string;
+  onElapsed?: () => void;
+}) {
   const { t, i18n } = useTranslation();
-  const target = REGISTRATION_DEADLINE.getTime();
+  const target = new Date(deadline).getTime();
 
   // Seeded as null rather than from Date.now(): the server and the client would
   // compute different values and React would flag a hydration mismatch. The
@@ -52,11 +58,14 @@ export default function Countdown() {
       const next = getTimeLeft(target);
       setTimeLeft(next);
       setHasElapsed(next === null);
+      if (next === null) onElapsed?.();
     };
 
     tick();
     const timer = setInterval(tick, SECOND);
     return () => clearInterval(timer);
+    // onElapsed is a fire-once notification; re-subscribing on every render is not needed.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target]);
 
   const language = i18n.resolvedLanguage ?? i18n.language;

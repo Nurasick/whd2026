@@ -4,12 +4,6 @@
  * values belong here.
  */
 
-/** Registration form — the destination of every "Register" CTA on the page. */
-export const REGISTRATION_URL = 'https://forms.gle/4A8GVRFzDLKdru9JA';
-
-/** Deadline the hero countdown runs down to (local time). */
-export const REGISTRATION_DEADLINE = new Date('2025-10-22T23:59:00');
-
 export const VENUE_MAP_URL = 'https://maps.google.com/?q=Nazarbayev+University';
 
 export const CONTACT_EMAIL = 'acm_w@nu.edu.kz';

@@ -29,7 +29,6 @@ const V = {
   phoneRequired: 'validation.phoneRequired',
   phoneInvalid: 'validation.phoneInvalid',
   educationInvalid: 'validation.educationInvalid',
-  cvUrlInvalid: 'validation.cvUrlInvalid',
   teamNameMin: 'validation.teamNameMin',
   teamNameMax: 'validation.teamNameMax',
   inviteCodeRequired: 'validation.inviteCodeRequired',
@@ -95,10 +94,6 @@ export const onboardingSchema = z
       .refine((v) => !v || phoneRegex.test(v), { message: V.parentPhoneInvalid })
       .transform((v) => (v ? stripPhoneDigits(v) : undefined)),
     educationLevel: z.enum(EDUCATION_LEVELS, { error: V.educationInvalid }),
-    cvUrl: z
-      .union([z.literal(''), z.url({ error: V.cvUrlInvalid })])
-      .optional()
-      .transform((v) => v || undefined),
   })
   // School students are usually minors, so a guardian contact is required.
   .refine((d) => !MINOR_EDUCATION_LEVELS.includes(d.educationLevel) || !!d.parentPhone, {

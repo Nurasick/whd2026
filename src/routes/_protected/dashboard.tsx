@@ -10,6 +10,7 @@ import { AuthHeader } from '@/components/AuthHeader';
 import { TeamCard, type PendingTeamAction } from '@/components/dashboard/TeamCard';
 import { NoTeamCard } from '@/components/dashboard/NoTeamCard';
 import { DashboardStats } from '@/components/dashboard/DashboardStats';
+import { CvCard } from '@/components/dashboard/CvCard';
 import { ensureSession } from '@/lib/auth.server';
 import { getParticipant } from '@/lib/onboarding.server';
 import {
@@ -40,6 +41,7 @@ const loadDashboard = createServerFn({ method: 'GET' }).handler(async () => {
     email: session.user.email,
     fullName: profile?.fullName ?? session.user.email,
     team,
+    hasCv: !!profile?.cvUrl,
     registrationOpen: isRegistrationOpen(),
   };
 });
@@ -98,7 +100,7 @@ function DashboardPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const { trigger } = useWebHaptics(webHapticsOptions);
-  const { userId, email, fullName, team, registrationOpen } = Route.useLoaderData();
+  const { userId, email, fullName, team, hasCv, registrationOpen } = Route.useLoaderData();
   const [pendingAction, setPendingAction] = useState<PendingTeamAction>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
 
@@ -205,6 +207,16 @@ function DashboardPage() {
             onGenerate={() => generateTeamNameFn()}
           />
         )}
+
+        <CvCard
+          hasCv={hasCv}
+          registrationOpen={registrationOpen}
+          onDone={succeed}
+          onError={(message) => {
+            trigger('error');
+            setFeedback({ type: 'error', message });
+          }}
+        />
       </main>
     </div>
   );

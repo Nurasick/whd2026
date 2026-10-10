@@ -16,12 +16,19 @@ const NAV_LINKS = [
   { href: '#faq', labelKey: 'navbar.faq' },
 ] as const;
 
-export default function Navbar({ session }: { session: Session }) {
+export default function Navbar({
+  session,
+  registrationOpen,
+}: {
+  session: Session;
+  registrationOpen: boolean;
+}) {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const isLoggedIn = !!session?.user;
   const ctaTo = isLoggedIn ? '/dashboard' : '/login';
-  const ctaLabel = isLoggedIn ? t('navbar.dashboard') : t('navbar.register');
+  const guestLabel = registrationOpen ? t('navbar.register') : t('navbar.signIn');
+  const ctaLabel = isLoggedIn ? t('navbar.dashboard') : guestLabel;
 
   return (
     <header className="bg-whd-dark/90 fixed inset-x-0 top-0 z-50 w-full">

@@ -24,6 +24,7 @@ const resolveInvite = createServerFn({ method: 'GET' })
   .handler(async ({ data }) => {
     const team = await getTeamBySlug(data.slug);
     if (!team) return { status: 'not-found' as const };
+    if (!isRegistrationOpen()) return { status: 'closed' as const, team };
 
     const session = await getSession(getRequest());
     if (!session?.user) return { status: 'anonymous' as const, team };
@@ -83,6 +84,7 @@ function InvitePage() {
 
   const messages: Record<string, string> = {
     'not-found': t('validation.inviteCodeInvalid'),
+    closed: t('invite.registrationClosed'),
     'already-in-team': t('invite.alreadyInTeam'),
     full: t('invite.teamFull'),
   };

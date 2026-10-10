@@ -27,7 +27,6 @@ export async function upsertParticipant(data: {
   placeOfStudy: string;
   parentPhone?: string | null;
   educationLevel: string;
-  cvUrl?: string | null;
 }) {
   const db = getAppDb();
 
@@ -42,7 +41,6 @@ export async function upsertParticipant(data: {
       placeOfStudy: data.placeOfStudy,
       parentPhone: data.parentPhone ?? null,
       educationLevel: data.educationLevel,
-      cvUrl: data.cvUrl ?? null,
     })
     .onConflictDoUpdate({
       target: participant.id,
@@ -54,7 +52,6 @@ export async function upsertParticipant(data: {
         placeOfStudy: data.placeOfStudy,
         parentPhone: data.parentPhone ?? null,
         educationLevel: data.educationLevel,
-        cvUrl: data.cvUrl ?? null,
         updatedAt: new Date(),
       },
     });

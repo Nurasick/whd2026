@@ -9,6 +9,8 @@ import { OnboardingForm, type OnboardingDefaults } from '@/components/onboarding
 import { ensureSession, getSession } from '@/lib/auth.server';
 import { getParticipant, upsertParticipant } from '@/lib/onboarding.server';
 import { isRegistrationOpen, REGISTRATION_CLOSED_I18N_KEY } from '@/lib/registration.server';
+import { LinkButton } from '@/components/ui/button';
+import { Notice } from '@/components/ui/notice';
 import { onboardingSchema } from '@/lib/validation';
 import { safeInviteRedirect, validateRedirectSearch } from '@/lib/redirect';
 
@@ -17,11 +19,13 @@ const loadProfile = createServerFn({ method: 'GET' }).handler(async () => {
   const session = await getSession(getRequest());
   if (!session?.user) return { authed: false as const };
 
+  const registrationOpen = isRegistrationOpen();
   const p = await getParticipant(session.user.id);
-  if (!p) return { authed: true as const, defaults: undefined };
+  if (!p) return { authed: true as const, registrationOpen, defaults: undefined };
 
   return {
     authed: true as const,
+    registrationOpen,
     defaults: {
       fullName: p.fullName,
       iin: p.iin,
@@ -30,7 +34,6 @@ const loadProfile = createServerFn({ method: 'GET' }).handler(async () => {
       placeOfStudy: p.placeOfStudy,
       parentPhone: p.parentPhone ?? '',
       educationLevel: p.educationLevel,
-      cvUrl: p.cvUrl ?? '',
     } satisfies OnboardingDefaults,
   };
 });
@@ -61,8 +64,31 @@ export const Route = createFileRoute('/onboarding')({
 function OnboardingPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { defaults } = Route.useLoaderData();
+  const { defaults, registrationOpen } = Route.useLoaderData();
   const { redirect: inviteRedirect } = Route.useSearch();
+
+  if (!registrationOpen) {
+    // With a profile the details are frozen; without one, sign-up is over.
+    return (
+      <div className="bg-whd-dark flex min-h-screen flex-col">
+        <AuthHeader showSignOut />
+        <AuthCard title={t('onboarding.closedTitle')}>
+          <Notice className="mb-5">
+            {defaults ? t('onboarding.closedExisting') : t('onboarding.closedNew')}
+          </Notice>
+          {defaults ? (
+            <LinkButton href="/dashboard" className="w-full">
+              {t('dashboard.title')}
+            </LinkButton>
+          ) : (
+            <LinkButton href="/" variant="outline" className="w-full">
+              {t('onboarding.backHome')}
+            </LinkButton>
+          )}
+        </AuthCard>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-whd-dark flex min-h-screen flex-col">

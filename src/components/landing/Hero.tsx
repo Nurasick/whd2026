@@ -1,12 +1,41 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'motion/react';
 import { Link } from '@tanstack/react-router';
 import { NEXT_STEP_ROUTE, type NextStep } from '@/lib/next-step';
 import { MIN_TEAM_SIZE } from '@/db/schema';
 import Countdown from '@/components/landing/Countdown';
+import type { RegistrationStatus } from '@/lib/registration';
 
-export default function Hero({ nextStep }: { nextStep: NextStep }) {
+type Cta = { to: (typeof NEXT_STEP_ROUTE)[NextStep]; label: string } | null;
+
+/**
+ * After the deadline nobody can sign up, but people who did register still
+ * need a way back to their team. A visitor without a profile has nowhere to go.
+ */
+function closedCta(nextStep: NextStep, t: (key: string) => string): Cta {
+  if (nextStep === 'register') return { to: '/login', label: t('hero.cta.signIn') };
+  if (nextStep === 'onboarding') return null;
+  return { to: '/dashboard', label: t('hero.cta.ready') };
+}
+
+export default function Hero({
+  nextStep,
+  registration,
+}: {
+  nextStep: NextStep;
+  registration: RegistrationStatus;
+}) {
   const { t } = useTranslation();
+  // Flips without a reload when the countdown reaches zero on an open page.
+  const [isClosed, setIsClosed] = useState(!registration.open);
+
+  const cta: Cta = isClosed
+    ? closedCta(nextStep, t)
+    : { to: NEXT_STEP_ROUTE[nextStep], label: t(`hero.cta.${nextStep}`) };
+  const statusKey =
+    isClosed && nextStep !== 'ready' ? `hero.closedStatus.${nextStep}` : `hero.status.${nextStep}`;
+  const showStatus = isClosed || nextStep !== 'register';
 
   return (
     <section id="top" className="relative overflow-x-clip pt-28 pb-16 md:pt-36 lg:pb-24">
@@ -32,20 +61,34 @@ export default function Hero({ nextStep }: { nextStep: NextStep }) {
             {t('hero.tagline')}
           </p>
 
-          <Countdown />
+          {isClosed ? (
+            // Dashed and unfilled, so it reads as a status rather than another button.
+            <p
+              role="status"
+              className="border-whd-pink/60 bg-whd-dark/60 text-whd-pink-bright rounded-[20px] border-2 border-dashed px-6 py-4 text-center text-[clamp(1.5rem,1rem+1.4vw,2.5rem)] font-bold lowercase"
+            >
+              {t('countdown.ended')}
+            </p>
+          ) : (
+            registration.deadline && (
+              <Countdown deadline={registration.deadline} onElapsed={() => setIsClosed(true)} />
+            )
+          )}
 
           <div className="flex flex-col gap-3">
-            <Link
-              to={NEXT_STEP_ROUTE[nextStep]}
-              className="neon-frame neon-frame-interactive group w-full no-underline outline-none focus-visible:ring-4 focus-visible:ring-white/70"
-            >
-              <span className="neon-panel neon-text group-hover:bg-whd-purple-soft flex items-center justify-center p-4 text-[clamp(1.5rem,1rem+1.4vw,2.5rem)] font-bold text-white lowercase transition-colors duration-200">
-                {t(`hero.cta.${nextStep}`)}
-              </span>
-            </Link>
-            {nextStep !== 'register' && (
+            {cta && (
+              <Link
+                to={cta.to}
+                className="neon-frame neon-frame-interactive group w-full no-underline outline-none focus-visible:ring-4 focus-visible:ring-white/70"
+              >
+                <span className="neon-panel neon-text group-hover:bg-whd-purple-soft flex items-center justify-center p-4 text-[clamp(1.5rem,1rem+1.4vw,2.5rem)] font-bold text-white lowercase transition-colors duration-200">
+                  {cta.label}
+                </span>
+              </Link>
+            )}
+            {showStatus && (
               <p className="text-whd-pink-soft text-sm md:text-base">
-                {t(`hero.status.${nextStep}`, { min: MIN_TEAM_SIZE })}
+                {t(statusKey, { min: MIN_TEAM_SIZE })}
               </p>
             )}
           </div>

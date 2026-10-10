@@ -4,13 +4,12 @@ import { emailOTP } from 'better-auth/plugins';
 import { env } from 'cloudflare:workers';
 import { getDb } from '@/db';
 import { user, session, account, verification } from '@/db/auth-schema';
+import { callGas, isGasConfigured } from '@/lib/gas.server';
 
 interface AuthEnv {
   DB: D1Database;
   BETTER_AUTH_SECRET: string;
   BETTER_AUTH_URL: string;
-  GAS_URL?: string;
-  GAS_SECRET?: string;
   GOOGLE_CLIENT_ID?: string;
   GOOGLE_CLIENT_SECRET?: string;
   DEMO_LOGIN_EMAIL?: string;
@@ -56,7 +55,6 @@ export function getAuth() {
   if (!d1Binding) throw new Error('D1 binding (DB) is not configured — check wrangler.jsonc');
 
   const db = getDb(d1Binding);
-  const { GAS_URL: gasUrl, GAS_SECRET: gasSecret } = authEnv;
   const { GOOGLE_CLIENT_ID: googleId, GOOGLE_CLIENT_SECRET: googleSecret } = authEnv;
 
   const socialProviders =
@@ -83,30 +81,14 @@ export function getAuth() {
           if (isDemoEmail(email)) return;
           // Without a mail webhook configured, print the code so local
           // development works with no external service.
-          if (!gasUrl || !gasSecret) {
+          if (!isGasConfigured()) {
             console.log(`[OTP] type=${type} email=${email} otp=${otp}`);
             return;
           }
           try {
-            const res = await fetch(gasUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ secret: gasSecret, action: 'send-otp', email, otp, type }),
-            });
-            if (!res.ok) {
-              console.error(`[OTP] mail webhook returned HTTP ${res.status}`);
-              return;
-            }
-            // Apps Script answers 200 even on failure; the verdict is in the body.
-            const result = (await res.json().catch(() => null)) as {
-              ok?: boolean;
-              error?: string;
-            } | null;
-            if (!result?.ok) {
-              console.error(`[OTP] mail webhook failed: ${result?.error ?? 'non-JSON response'}`);
-            }
+            await callGas('send-otp', { email, otp, type });
           } catch (err) {
-            console.error('[OTP] failed to call mail webhook:', err);
+            console.error('[OTP] failed to send the code:', err);
           }
         },
       }),

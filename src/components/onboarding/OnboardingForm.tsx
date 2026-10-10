@@ -33,7 +33,6 @@ export function OnboardingForm({
     placeOfStudy: defaults?.placeOfStudy ?? '',
     parentPhone: defaults?.parentPhone ?? '',
     educationLevel: (defaults?.educationLevel ?? '') as EducationLevel | '',
-    cvUrl: defaults?.cvUrl ?? '',
   });
   const [errors, setErrors] = useState<Errors>({});
   const [pending, setPending] = useState(false);

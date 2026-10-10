@@ -12,7 +12,13 @@ const SOCIALS = [
   { href: SOCIAL_LINKS.email, labelKey: 'footer.email' },
 ] as const;
 
-export default function Footer({ session }: { session: Session }) {
+export default function Footer({
+  session,
+  registrationOpen,
+}: {
+  session: Session;
+  registrationOpen: boolean;
+}) {
   const { t } = useTranslation();
   const isLoggedIn = !!session?.user;
 
@@ -28,7 +34,7 @@ export default function Footer({ session }: { session: Session }) {
         <div className="relative mx-auto flex max-w-[40rem] flex-col items-center gap-8 text-center">
           <p className="whd-display text-[clamp(2.25rem,1.2rem+3.5vw,5rem)]">
             <DecryptedText
-              text={t('footer.readyToJoin')}
+              text={registrationOpen ? t('footer.readyToJoin') : t('footer.registrationClosed')}
               animateOn="view"
               sequential
               encryptedClassName="text-whd-pink/60"
@@ -39,7 +45,11 @@ export default function Footer({ session }: { session: Session }) {
             className="neon-frame neon-frame-interactive group w-full no-underline outline-none focus-visible:ring-4 focus-visible:ring-white/70"
           >
             <NeonPanel className="neon-text group-hover:bg-whd-purple-soft flex items-center justify-center p-4 text-[clamp(1.5rem,1rem+1.4vw,2.5rem)] font-bold text-white lowercase transition-colors duration-200">
-              {isLoggedIn ? t('footer.dashboard') : t('footer.register')}
+              {isLoggedIn
+                ? t('footer.dashboard')
+                : registrationOpen
+                  ? t('footer.register')
+                  : t('footer.signIn')}
             </NeonPanel>
           </Link>
         </div>

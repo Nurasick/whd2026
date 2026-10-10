@@ -10,6 +10,8 @@ import { EmailForm } from '@/components/login/EmailForm';
 import { OtpForm } from '@/components/login/OtpForm';
 import { GoogleButton } from '@/components/login/GoogleButton';
 import { getDemoLogin, getSession, isGoogleSignInEnabled } from '@/lib/auth.server';
+import { isRegistrationOpen } from '@/lib/registration.server';
+import { Notice } from '@/components/ui/notice';
 import { getParticipant } from '@/lib/onboarding.server';
 import { safeInviteRedirect, validateRedirectSearch } from '@/lib/redirect';
 
@@ -27,6 +29,7 @@ const getPostLoginDestination = createServerFn({ method: 'GET' }).handler(async 
 
 const getLoginOptions = createServerFn({ method: 'GET' }).handler(() => ({
   googleEnabled: isGoogleSignInEnabled(),
+  registrationOpen: isRegistrationOpen(),
   demo: getDemoLogin(),
 }));
 
@@ -47,7 +50,7 @@ export const Route = createFileRoute('/login')({
 function LoginPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { googleEnabled, demo } = Route.useLoaderData();
+  const { googleEnabled, registrationOpen, demo } = Route.useLoaderData();
   const search = Route.useSearch();
   const [email, setEmail] = useState<string | null>(null);
   const isDemo = !!demo && email?.trim().toLowerCase() === demo.email;
@@ -63,6 +66,7 @@ function LoginPage() {
       <AuthHeader />
       {email === null ? (
         <AuthCard title={t('login.title')} subtitle={t('login.subtitle')}>
+          {!registrationOpen && <Notice className="mb-5">{t('login.registrationClosed')}</Notice>}
           {googleEnabled && (
             <>
               <GoogleButton redirect={search.redirect} />

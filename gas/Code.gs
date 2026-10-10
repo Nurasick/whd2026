@@ -1,9 +1,11 @@
 /**
- * Women's Hack Day — mail webhook for login codes.
+ * Women's Hack Day — webhook for login codes and CV storage.
  *
- * The site POSTs JSON to this web app:
- *   { secret, action: 'send-otp', email, otp, type }
- * and this script emails the 6-digit code from the account that deployed it.
+ * The site POSTs JSON to this web app, always with { secret, action }:
+ *   send-otp   { email, otp, type }  emails the 6-digit code
+ *   upload-cv  { fileName, base64 }  saves a PDF to the CV folder → { fileId }
+ *   delete-cv  { fileId }            moves that CV to the Drive trash
+ * Mail is sent and files are owned by the account that deployed the script.
  *
  * Setup (see gas/README.md):
  *   1. Project Settings → Script Properties → add GAS_SECRET (same value as the site's).
@@ -24,6 +26,9 @@ const BRAND = {
 const OTP_PATTERN = /^\d{6}$/;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const CODE_LIFETIME_MINUTES = 5;
+const CV_FOLDER_NAME = "Women's Hack Day CVs";
+const CV_MAX_BYTES = 5 * 1024 * 1024;
+const FILE_ID_PATTERN = /^[\w-]{10,200}$/;
 
 function doPost(e) {
   try {
@@ -34,6 +39,8 @@ function doPost(e) {
     if (body.secret !== expected) return reply({ ok: false, error: 'Unauthorized' });
 
     if (body.action === 'send-otp') return sendOtp(body);
+    if (body.action === 'upload-cv') return uploadCv(body);
+    if (body.action === 'delete-cv') return deleteCv(body);
     return reply({ ok: false, error: 'Unknown action: ' + body.action });
   } catch (err) {
     console.error(err);
@@ -84,13 +91,65 @@ function otpHtml(otp) {
   );
 }
 
+/**
+ * The private Drive folder CVs go into. Uses the CV_FOLDER_ID script property
+ * when set; otherwise creates the folder once and remembers its id.
+ */
+function getCvFolder() {
+  const props = PropertiesService.getScriptProperties();
+  const id = props.getProperty('CV_FOLDER_ID');
+  if (id) return DriveApp.getFolderById(id);
+  const folder = DriveApp.createFolder(CV_FOLDER_NAME);
+  props.setProperty('CV_FOLDER_ID', folder.getId());
+  return folder;
+}
+
+function uploadCv(body) {
+  const fileName = String(body.fileName || '').slice(0, 120);
+  if (!/\.pdf$/i.test(fileName)) return reply({ ok: false, error: 'Invalid file name' });
+
+  const bytes = Utilities.base64Decode(String(body.base64 || ''));
+  if (bytes.length === 0 || bytes.length > CV_MAX_BYTES) return reply({ ok: false, error: 'Invalid file size' });
+
+  const blob = Utilities.newBlob(bytes, 'application/pdf', fileName);
+  const file = getCvFolder().createFile(blob);
+  return reply({ ok: true, fileId: file.getId() });
+}
+
+function deleteCv(body) {
+  const fileId = String(body.fileId || '');
+  if (!FILE_ID_PATTERN.test(fileId)) return reply({ ok: false, error: 'Invalid file id' });
+
+  let file;
+  try {
+    file = DriveApp.getFileById(fileId);
+  } catch (err) {
+    // Already gone (deleted by hand in Drive): nothing left to do.
+    return reply({ ok: true });
+  }
+
+  // Only ever touch files inside the CV folder, whatever id is sent.
+  const folderId = getCvFolder().getId();
+  const parents = file.getParents();
+  let inFolder = false;
+  while (parents.hasNext()) if (parents.next().getId() === folderId) inFolder = true;
+  if (!inFolder) return reply({ ok: false, error: 'File is not in the CV folder' });
+
+  file.setTrashed(true);
+  return reply({ ok: true });
+}
+
 function reply(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
 
-/** Run this once from the editor to grant mail permission and send yourself a test code. */
+/**
+ * Run this once from the editor to grant mail and Drive permission: it sends
+ * you a test code and creates the CV folder.
+ */
 function testSendToMe() {
   const me = Session.getActiveUser().getEmail();
   sendOtp({ email: me, otp: '123456' });
+  console.log('CV folder: ' + getCvFolder().getUrl());
   console.log('Sent a test code to ' + me + '. Remaining daily quota: ' + MailApp.getRemainingDailyQuota());
 }

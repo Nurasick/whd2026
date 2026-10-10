@@ -1,6 +1,6 @@
 import { env } from 'cloudflare:workers';
 
-import { REGISTRATION_CLOSED_I18N_KEY } from './registration';
+import { REGISTRATION_CLOSED_I18N_KEY, type RegistrationStatus } from './registration';
 
 export { REGISTRATION_CLOSED_I18N_KEY };
 
@@ -27,4 +27,9 @@ export function getRegistrationDeadline(): Date | null {
 export function isRegistrationOpen(): boolean {
   const deadline = getRegistrationDeadline();
   return deadline ? Date.now() < deadline.getTime() : true;
+}
+
+/** What the UI needs: whether sign-ups are open, and the deadline for the countdown. */
+export function getRegistrationStatus(): RegistrationStatus {
+  return { open: isRegistrationOpen(), deadline: getRegistrationDeadline()?.toISOString() ?? null };
 }

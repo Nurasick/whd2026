@@ -19,6 +19,8 @@ export type ReportParticipant = {
   placeOfStudy: string;
   parentPhone: string | null;
   educationLevel: string;
+  /** Google Drive link to the uploaded PDF; organisers need access to the CV folder. */
+  cvUrl: string | null;
   teamName: string | null;
   /** Links the participant row to its team row in the admin table. */
   teamSlug: string | null;
@@ -87,6 +89,7 @@ export async function getReportData(): Promise<{
     placeOfStudy: p.placeOfStudy,
     parentPhone: p.parentPhone,
     educationLevel: p.educationLevel,
+    cvUrl: p.cvUrl,
     teamName: p.team?.name ?? null,
     teamSlug: p.team?.inviteSlug ?? null,
     teamEligible: !!p.teamId && eligibleTeamIds.has(p.teamId),
@@ -135,6 +138,7 @@ export function participantsToCsv(rows: ReportParticipant[]): string {
     'Place of study',
     'Parent phone',
     'Education level',
+    'CV',
     'Team',
     'Attended',
     'Registered at',
@@ -153,6 +157,7 @@ export function participantsToCsv(rows: ReportParticipant[]): string {
       r.placeOfStudy,
       r.parentPhone,
       r.educationLevel,
+      r.cvUrl,
       r.teamName,
       r.attended ? 'yes' : 'no',
       r.createdAt,

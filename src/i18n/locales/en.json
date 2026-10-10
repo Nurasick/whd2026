@@ -13,13 +13,14 @@
   "navbar": {
     "about": "About",
     "schedule": "Schedule",
-    "partners": "Partners",
+    "partners": "Sponsors",
     "benefits": "Benefits",
     "gallery": "Gallery",
     "faq": "FAQ",
     "register": "Registration",
     "toggleMenu": "Toggle menu",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "signIn": "Sign in"
   },
   "hero": {
     "title": "Women’s Hack Day",
@@ -31,13 +32,20 @@
       "onboarding": "Finish registration",
       "team": "Find a team",
       "ready": "Dashboard",
-      "incomplete": "Invite teammates"
+      "incomplete": "Invite teammates",
+      "signIn": "Sign in"
     },
     "status": {
       "onboarding": "You are signed in — fill in your details to complete registration.",
       "team": "Your details are saved. Next, create or join a team.",
       "ready": "You are registered with a team. See you at the event!",
       "incomplete": "Your team needs at least {{min}} members to compete. Invite more teammates."
+    },
+    "closedStatus": {
+      "register": "Already registered? Sign in to see your team.",
+      "onboarding": "Registration closed before you finished your details.",
+      "team": "Registration is closed, and you are not in a team.",
+      "incomplete": "Registration is closed. Your team has fewer than {{min}} members — contact the organisers."
     }
   },
   "countdown": {
@@ -54,18 +62,18 @@
   "infoCards": {
     "when": "When?",
     "whenAnswer": "October 25",
-    "whenDetail": "2025 — registration is open October 8–22",
+    "whenDetail": "one day, three rounds",
     "where": "Where?",
     "whereAnswer": "Nazarbayev University",
-    "whereDetail": "Astana, Kazakhstan",
-    "whereAction": "Show on map",
+    "whereDetail": "Astana",
+    "whereAction": "map",
     "how": "How?",
-    "howAnswer": "In teams of 3–4",
-    "howDetail": "One representative fills in the registration form for the whole team"
+    "howAnswer": "Teams of 3–4",
+    "howDetail": "sign up, then build your team"
   },
   "about": {
     "kicker": "About",
-    "editionOrdinal": "5th",
+    "editionOrdinal": "6th",
     "annualEdition": "annual edition",
     "roundsCount": "3",
     "rounds": "rounds",
@@ -74,17 +82,16 @@
     "prizePool": "prize pool",
     "title": "The biggest competition for girls",
     "titleHighlight": "who dream of conquering IT",
-    "description": "<pink>Women’s Hack Day</pink> is an annual <pink>3-round team competition</pink>, where female high school, college, and university students can challenge themselves in various areas of software engineering and development. In teams of 3-4, participants will work together on tasks in <pink>mathematics, competitive programming, and product design</pink>.",
-    "organizers": "The organizer is the NU ACM-W Student Chapter — the first and only branch of ACM-Women in Kazakhstan and Central Asia. Our mission is to support women in STEM fields, especially in IT, through initiatives that foster social, professional, and technical growth.",
-    "imageAlt": "Women’s Hack Day illustration"
+    "description": "<pink>Women’s Hack Day</pink> is a one-day team competition for high school, college and university girls. Teams of 3–4 go through <pink>three rounds: mathematics, competitive programming and product design</pink>.",
+    "organizers": "Organised by the NU ACM-W Student Chapter — the first ACM-W chapter in Kazakhstan and Central Asia, supporting women in STEM and IT."
   },
   "timeline": {
     "kicker": "Dates",
-    "title": "WHD 2025 Timeline",
+    "title": "WHD 2026 Timeline",
     "items": {
-      "registration": "October 8-22",
+      "registration": "October 6-20",
       "registrationLabel": "Registration Period",
-      "confirmation": "October 23",
+      "confirmation": "October 20-21",
       "confirmationLabel": "Confirmation Period",
       "event": "October 25",
       "eventLabel": "Women’s Hack Day"
@@ -92,7 +99,7 @@
   },
   "schedule": {
     "kicker": "Event day",
-    "title": "WHD 2025 Schedule",
+    "title": "WHD 2026 Schedule",
     "events": {
       "registration": "Registration",
       "opening": "Opening Ceremony",
@@ -110,9 +117,7 @@
     "prizePool": "1,000,000 ₸ Prize Pool",
     "welcomePackage": "Welcome Package",
     "merchandise": "Exclusive Merchandise",
-    "coffeeBreak": "Coffee Break & Networking",
-    "certificates": "Certificates of Participation",
-    "coaching": "3 spots for online career coaching with Freedom Broker's Director of Data & Analytics, Ekaterina Strukova"
+    "coffeeBreak": "Coffee Break & Networking"
   },
   "gallery": {
     "kicker": "Moments",
@@ -155,15 +160,15 @@
       },
       "howToParticipate": {
         "q": "How can I participate?",
-        "a": "Form a team of 3-4 people, register, and come to Nazarbayev University on October 25, 2025. Please note that the registration form should be completed by one representative of the team. Registration deadline: October 22, 2025."
+        "a": "Sign up on this site with your email, fill in your details, and create a team of 3-4 people or join one with an invite link. Registration is open until October 20, 2026. Then come to Nazarbayev University on October 25, 2026."
       },
       "online": {
         "q": "Can I participate online?",
-        "a": "No, Women’s Hack Day 2025 will be held offline at Nazarbayev University, Astana, Kazakhstan."
+        "a": "No, Women’s Hack Day 2026 will be held offline at Nazarbayev University, Astana, Kazakhstan."
       },
       "certificates": {
-        "q": "Will participants receive certificates or prizes?",
-        "a": "Yes, every participant will receive a certificate of participation. Winners will get cash prizes and merch, plus there will be welcome packages for the first 110 participants and a coffee break for everyone. Additionally, there are 3 spots for online career coaching with Freedom Broker's Director of Data and Analytics, Ekaterina Strukova."
+        "q": "Will there be prizes?",
+        "a": "Yes! Winners get cash prizes and merch, participants get welcome packages, and there is a coffee break for everyone."
       },
       "noAnswer": {
         "q": "I didn't find an answer to my question. What should I do?",
@@ -173,11 +178,8 @@
   },
   "partners": {
     "kicker": "Supported by",
-    "title": "Partners",
-    "generalSponsor": "General Sponsor",
-    "infoPartners": "Info Partners",
+    "title": "Our Sponsors",
     "generalSponsorAlt": "Freedom Broker",
-    "infoPartnerAlt": "Info partner {{index}}",
     "nuImpactAlt": "NU Impact Foundation"
   },
   "footer": {
@@ -187,10 +189,12 @@
     "telegram": "Telegram",
     "tiktok": "TikTok",
     "email": "Email",
-    "rights": "© 2025 NU ACM-W SC All rights reserved.",
+    "rights": "© 2026 NU ACM-W SC All rights reserved.",
     "dashboard": "Dashboard",
     "privacy": "Privacy Policy",
-    "terms": "Terms of Service"
+    "terms": "Terms of Service",
+    "signIn": "Sign in",
+    "registrationClosed": "Registration is closed"
   },
   "login": {
     "title": "Sign in",
@@ -210,7 +214,8 @@
     "sendFailed": "Could not send the code. Please try again.",
     "verifyFailed": "That code is not right. Please try again.",
     "demoAccount": "Demo admin account:",
-    "demoCode": "Demo code:"
+    "demoCode": "Demo code:",
+    "registrationClosed": "Registration is closed. If you already registered, you can still sign in to see your team."
   },
   "onboarding": {
     "title": "Your details",
@@ -226,7 +231,11 @@
     "educationLevel": "Level of study",
     "submit": "Continue",
     "saveFailed": "Could not save. Please try again.",
-    "registrationClosedError": "Registration is closed."
+    "registrationClosedError": "Registration is closed.",
+    "closedTitle": "Registration is closed",
+    "closedNew": "Registration closed before you finished your details, so you can no longer sign up.",
+    "closedExisting": "Registration is closed, so your details can no longer be changed.",
+    "backHome": "Back to the main page"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -285,7 +294,6 @@
     "phoneRequired": "Phone is required",
     "phoneInvalid": "Enter a valid phone number",
     "educationInvalid": "Choose your level of study",
-    "cvUrlInvalid": "Enter a valid link",
     "teamNameMin": "Team name must be at least 3 characters",
     "teamNameMax": "Team name must be 30 characters or fewer",
     "inviteCodeRequired": "Invite code is required",
@@ -311,7 +319,8 @@
     "join": "Join team",
     "cannotJoin": "Cannot join",
     "alreadyInTeam": "You are already in a team. Leave it first to join another.",
-    "teamFull": "This team is already full."
+    "teamFull": "This team is already full.",
+    "registrationClosed": "Registration is closed, so teams can no longer change."
   },
   "admin": {
     "title": "Admin",
@@ -374,8 +383,10 @@
       "memberCount": "Size",
       "eligible": "Eligible",
       "members": "Members",
-      "inviteSlug": "Invite code"
-    }
+      "inviteSlug": "Invite code",
+      "cvUrl": "CV"
+    },
+    "cvOpen": "Open"
   },
   "notFound": {
     "title": "Page not found",
@@ -386,5 +397,23 @@
     "title": "Something went wrong",
     "message": "This page could not be loaded. Try again, or go back home.",
     "retry": "Try again"
+  },
+  "cv": {
+    "title": "Your CV",
+    "hint": "Optional. Upload a PDF up to {{mb}} MB — our partners may look at it. Only the organisers can open it.",
+    "locked": "Registration is closed, so your CV can no longer be changed.",
+    "uploaded": "Uploaded",
+    "none": "Not uploaded",
+    "upload": "Upload PDF",
+    "replace": "Replace",
+    "uploading": "Uploading…",
+    "delete": "Delete",
+    "deleteConfirm": "Click again to delete",
+    "feedbackUploaded": "Your CV was uploaded.",
+    "feedbackDeleted": "Your CV was deleted.",
+    "errorNotPdf": "Please choose a PDF file.",
+    "errorTooLarge": "The file is larger than {{mb}} MB.",
+    "errorNoProfile": "Fill in your details first.",
+    "errorFailed": "Could not save your CV. Please try again."
   }
 }

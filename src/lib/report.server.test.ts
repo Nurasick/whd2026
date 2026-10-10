@@ -11,6 +11,7 @@ const row: ReportParticipant = {
   placeOfStudy: 'NIS, Astana',
   parentPhone: null,
   educationLevel: 'School',
+  cvUrl: null,
   teamName: 'Binary Blossoms',
   teamSlug: 'binary-blossoms',
   teamEligible: true,

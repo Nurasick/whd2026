@@ -17,11 +17,17 @@ import StarTrail from '@/components/landing/StarTrail';
 import { getSession } from '@/lib/auth.server';
 import { getParticipant } from '@/lib/onboarding.server';
 import { getTeamByParticipant } from '@/lib/team.server';
+import { getRegistrationStatus } from '@/lib/registration.server';
 import { MIN_TEAM_SIZE } from '@/db/schema';
 import type { NextStep } from '@/lib/next-step';
 
 /** The session, plus where this visitor is in the sign-up funnel. */
-const getLandingState = createServerFn({ method: 'GET' }).handler(async () => {
+const getLandingState = createServerFn({ method: 'GET' }).handler(async () => ({
+  ...(await getFunnelState()),
+  registration: getRegistrationStatus(),
+}));
+
+async function getFunnelState() {
   const session = await getSession(getRequest());
   if (!session?.user) return { session, nextStep: 'register' as NextStep };
   const profile = await getParticipant(session.user.id);
@@ -31,7 +37,7 @@ const getLandingState = createServerFn({ method: 'GET' }).handler(async () => {
   const team = await getTeamByParticipant(session.user.id);
   const ready = !!team && team.members.length >= MIN_TEAM_SIZE;
   return { session, nextStep: (ready ? 'ready' : 'incomplete') as NextStep };
-});
+}
 
 export const Route = createFileRoute('/')({
   loader: () => getLandingState(),
@@ -39,15 +45,15 @@ export const Route = createFileRoute('/')({
 });
 
 function LandingPage() {
-  const { session, nextStep } = Route.useLoaderData();
+  const { session, nextStep, registration } = Route.useLoaderData();
 
   return (
     <div className="bg-whd-dark whd-grid-bg relative min-h-screen overflow-clip">
       {/* Neon star cursor trail — mouse only */}
       <StarTrail />
 
-      <Navbar session={session} />
-      <Hero nextStep={nextStep} />
+      <Navbar session={session} registrationOpen={registration.open} />
+      <Hero nextStep={nextStep} registration={registration} />
       <InfoCards />
       <About />
       <Timeline />
@@ -56,7 +62,7 @@ function LandingPage() {
       <Benefits />
       <Gallery />
       <FAQ />
-      <Footer session={session} />
+      <Footer session={session} registrationOpen={registration.open} />
     </div>
   );
 }
