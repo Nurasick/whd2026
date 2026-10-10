@@ -208,7 +208,9 @@
     "or": "or",
     "googleFailed": "Could not start Google sign-in. Please try again.",
     "sendFailed": "Could not send the code. Please try again.",
-    "verifyFailed": "That code is not right. Please try again."
+    "verifyFailed": "That code is not right. Please try again.",
+    "demoAccount": "Demo admin account:",
+    "demoCode": "Demo code:"
   },
   "onboarding": {
     "title": "Your details",

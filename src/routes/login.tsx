@@ -9,7 +9,7 @@ import { AuthCard } from '@/components/ui/auth-card';
 import { EmailForm } from '@/components/login/EmailForm';
 import { OtpForm } from '@/components/login/OtpForm';
 import { GoogleButton } from '@/components/login/GoogleButton';
-import { getSession, isGoogleSignInEnabled } from '@/lib/auth.server';
+import { getDemoLogin, getSession, isGoogleSignInEnabled } from '@/lib/auth.server';
 import { getParticipant } from '@/lib/onboarding.server';
 import { safeInviteRedirect, validateRedirectSearch } from '@/lib/redirect';
 
@@ -25,7 +25,10 @@ const getPostLoginDestination = createServerFn({ method: 'GET' }).handler(async 
   return profile ? '/dashboard' : '/onboarding';
 });
 
-const getGoogleEnabled = createServerFn({ method: 'GET' }).handler(() => isGoogleSignInEnabled());
+const getLoginOptions = createServerFn({ method: 'GET' }).handler(() => ({
+  googleEnabled: isGoogleSignInEnabled(),
+  demo: getDemoLogin(),
+}));
 
 export const Route = createFileRoute('/login')({
   // `?redirect=/invite/…` survives sign-in, so an invite link opened while
@@ -37,16 +40,17 @@ export const Route = createFileRoute('/login')({
     // Re-checked here as well as in validateSearch: this is where we navigate.
     if (destination) throw redirect({ to: safeInviteRedirect(search.redirect) ?? destination });
   },
-  loader: async () => ({ googleEnabled: await getGoogleEnabled() }),
+  loader: () => getLoginOptions(),
   component: LoginPage,
 });
 
 function LoginPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { googleEnabled } = Route.useLoaderData();
+  const { googleEnabled, demo } = Route.useLoaderData();
   const search = Route.useSearch();
   const [email, setEmail] = useState<string | null>(null);
+  const isDemo = !!demo && email?.trim().toLowerCase() === demo.email;
 
   const handleVerified = async () => {
     const destination = (await getPostLoginDestination()) ?? '/onboarding';
@@ -72,12 +76,28 @@ function LoginPage() {
             </>
           )}
           <EmailForm onSent={setEmail} />
+          {demo && <DemoHint label={t('login.demoAccount')} value={demo.email} />}
         </AuthCard>
       ) : (
         <AuthCard title={t('login.otpTitle')} subtitle={t('login.otpSubtitle', { email })}>
+          {isDemo && <DemoHint label={t('login.demoCode')} value={demo.code} mono />}
           <OtpForm email={email} onVerified={handleVerified} onChangeEmail={() => setEmail(null)} />
         </AuthCard>
       )}
+    </div>
+  );
+}
+
+/** TEMPORARY: shows the demo admin login (see getDemoLogin). */
+function DemoHint({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
+  return (
+    <div className="border-whd-pink/60 bg-whd-pink/10 mb-5 rounded-xl border border-dashed px-4 py-3 text-sm last:mt-5 last:mb-0">
+      <span className="text-whd-text-muted">{label} </span>
+      <span
+        className={mono ? 'font-mono text-lg tracking-[0.3em] text-white' : 'text-white select-all'}
+      >
+        {value}
+      </span>
     </div>
   );
 }

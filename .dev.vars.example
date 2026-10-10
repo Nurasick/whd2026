@@ -23,3 +23,9 @@ GOOGLE_CLIENT_SECRET=
 
 # Comma-separated emails allowed into /admin and /checkin.
 ADMIN_EMAILS=
+
+# TEMPORARY demo login for showing /admin to others. This email always gets this
+# 6-digit code (no email sent) and the login page shows it. Anyone can then sign
+# in as it, so keep it out of ADMIN_EMAILS once real participants register.
+# DEMO_LOGIN_EMAIL=admin@example.com
+# DEMO_LOGIN_CODE=246810
