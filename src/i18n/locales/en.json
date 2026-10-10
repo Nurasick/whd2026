@@ -14,6 +14,8 @@
     "about": "About",
     "schedule": "Schedule",
     "partners": "Partners",
+    "benefits": "Benefits",
+    "gallery": "Gallery",
     "faq": "FAQ",
     "register": "Registration",
     "toggleMenu": "Toggle menu",
@@ -112,6 +114,11 @@
     "certificates": "Certificates of Participation",
     "coaching": "3 spots for online career coaching with Freedom Broker's Director of Data & Analytics, Ekaterina Strukova"
   },
+  "gallery": {
+    "kicker": "Moments",
+    "title": "Gallery",
+    "imageAlt": "Photo from Women’s Hack Day {{index}}"
+  },
   "faq": {
     "kicker": "Questions",
     "title": "FAQ",
@@ -170,7 +177,8 @@
     "generalSponsor": "General Sponsor",
     "infoPartners": "Info Partners",
     "generalSponsorAlt": "Freedom Broker",
-    "infoPartnerAlt": "Info partner {{index}}"
+    "infoPartnerAlt": "Info partner {{index}}",
+    "nuImpactAlt": "NU Impact Foundation"
   },
   "footer": {
     "readyToJoin": "Ready to join?",

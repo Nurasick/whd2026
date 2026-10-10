@@ -14,6 +14,8 @@
     "about": "О WHD",
     "schedule": "Расписание",
     "partners": "Партнёры",
+    "benefits": "Преимущества",
+    "gallery": "Галерея",
     "faq": "FAQ",
     "register": "Регистрация",
     "toggleMenu": "Открыть меню",
@@ -112,6 +114,11 @@
     "certificates": "Сертификаты участия",
     "coaching": "3 места на онлайн карьерный коучинг с Директором по данным и аналитике Freedom Broker Екатериной Струковой"
   },
+  "gallery": {
+    "kicker": "Моменты",
+    "title": "Галерея",
+    "imageAlt": "Фото с Women’s Hack Day {{index}}"
+  },
   "faq": {
     "kicker": "Вопросы",
     "title": "Часто задаваемые вопросы",
@@ -170,7 +177,8 @@
     "generalSponsor": "Генеральный Спонсор",
     "infoPartners": "Информационные партнёры",
     "generalSponsorAlt": "Freedom Broker",
-    "infoPartnerAlt": "Информационный партнёр {{index}}"
+    "infoPartnerAlt": "Информационный партнёр {{index}}",
+    "nuImpactAlt": "NU Impact Foundation"
   },
   "footer": {
     "readyToJoin": "Готова участвовать?",

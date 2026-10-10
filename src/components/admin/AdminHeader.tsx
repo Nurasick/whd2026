@@ -18,11 +18,18 @@ export function AdminHeader({
   const { t } = useTranslation();
 
   return (
-    <header className="bg-whd-pink/95 sticky top-0 z-50 w-full shadow-lg backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-[100rem] items-center justify-between gap-3 px-6 sm:px-8 lg:px-12">
+    <header className="border-whd-pink/40 bg-whd-dark/75 sticky top-0 z-50 w-full border-b backdrop-blur-[20px]">
+      <div className="mx-auto flex h-16 max-w-[100rem] items-center justify-between gap-3 px-4 sm:px-8 lg:px-12">
         <div className="flex min-w-0 items-center gap-2 sm:gap-4">
           <Link to="/" className="flex shrink-0 items-center" aria-label="Women’s Hack Day">
-            <img src="/WHDlogo.svg" alt="" aria-hidden="true" className="h-10 w-10" />
+            <img
+              src="/whd/logo.webp"
+              alt=""
+              aria-hidden="true"
+              width={200}
+              height={101}
+              className="h-10 w-auto"
+            />
           </Link>
           <nav className="flex items-center gap-1 overflow-x-auto">
             <Link to="/dashboard" className={navLinkClass}>
@@ -31,14 +38,18 @@ export function AdminHeader({
             <Link
               to="/admin"
               className={navLinkClass}
-              activeProps={{ className: 'bg-white/15 text-white' }}
+              activeProps={{
+                className: 'bg-whd-purple text-white shadow-[inset_0_0_0_2px_var(--whd-pink)]',
+              }}
             >
               {t('admin.navReport')}
             </Link>
             <Link
               to="/checkin"
               className={navLinkClass}
-              activeProps={{ className: 'bg-white/15 text-white' }}
+              activeProps={{
+                className: 'bg-whd-purple text-white shadow-[inset_0_0_0_2px_var(--whd-pink)]',
+              }}
             >
               {t('admin.checkin')}
             </Link>
@@ -66,7 +77,7 @@ export function AdminHeader({
             label={t('common.signOut')}
             confirmLabel={t('common.confirm')}
             onConfirm={onSignOut}
-            armedClassName="bg-white text-whd-pink hover:bg-white/90 hover:text-whd-pink"
+            armedClassName="bg-whd-pink text-whd-purple-deep hover:bg-whd-pink-bright hover:text-whd-purple-deep"
           />
         </div>
       </div>

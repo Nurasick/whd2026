@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'motion/react';
 import { LinkButton } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import DecryptedText from '@/components/landing/DecryptedText';
+import { NeonFrame, NeonPanel } from '@/components/ui/neon';
 import { VENUE_MAP_URL } from '@/lib/event';
 
 /**
- * The "When / Where / How" band: three oversized question-and-answer rows
- * that give the essentials before anyone scrolls further.
+ * The "When / Where / How" band: three neon cards that give the essentials
+ * before anyone scrolls further.
  */
 export default function InfoCards() {
   const { t } = useTranslation();
@@ -32,35 +32,32 @@ export default function InfoCards() {
   ];
 
   return (
-    <section id="info" className="border-whd-border bg-whd-dark relative border-t">
-      {/* Soft halo bleeding up into the hero */}
-      <div className="bg-whd-pink/20 pointer-events-none absolute -top-24 left-1/2 h-48 w-[70%] -translate-x-1/2 rounded-[50%] blur-3xl" />
-
-      {rows.map((row, index) => (
-        <div key={row.label} className="relative">
-          {index > 0 && <Separator />}
+    <section id="info" className="relative py-10 md:py-16">
+      <div className="mx-auto grid max-w-[90rem] grid-cols-1 gap-4 px-4 sm:px-8 md:grid-cols-3 lg:px-12">
+        {rows.map((row, index) => (
           <motion.div
+            key={row.label}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.5, delay: index * 0.08 }}
-            className="px-6 py-12 sm:px-8 md:py-20 lg:px-12"
           >
-            <div className="mx-auto flex max-w-[100rem] flex-col gap-4 md:flex-row md:items-baseline md:gap-16">
-              <div className="md:w-1/4">
-                <span className="section-kicker">{row.label}</span>
-              </div>
-
-              <div className="md:w-3/4">
-                <h3 className="text-3xl leading-tight font-bold text-white sm:text-5xl md:text-6xl lg:text-7xl">
+            <NeonFrame interactive className="h-full">
+              <NeonPanel position="top" className="px-5 pt-4 pb-5">
+                <span className="text-whd-pink-bright text-sm font-semibold tracking-[0.25em] uppercase">
+                  {row.label}
+                </span>
+                <h3 className="neon-text mt-2 text-[clamp(1.75rem,1.2rem+1.6vw,3rem)] leading-tight font-bold text-white">
                   <DecryptedText
                     text={row.answer}
                     animateOn="view"
                     sequential
-                    encryptedClassName="text-whd-pink/50"
+                    encryptedClassName="text-whd-pink-bright/70"
                   />
                 </h3>
-                <p className="text-whd-text-muted mt-3 text-sm md:text-base">{row.detail}</p>
+              </NeonPanel>
+              <NeonPanel position="bottom" className="flex-1 px-5 pt-3 pb-4">
+                <p className="text-sm leading-relaxed text-white/85 md:text-base">{row.detail}</p>
                 {row.action && (
                   <LinkButton
                     href={row.action.href}
@@ -68,7 +65,7 @@ export default function InfoCards() {
                     rel="noopener noreferrer"
                     variant="link"
                     size="none"
-                    className="group/action mt-4 gap-1.5 text-sm font-semibold tracking-wider uppercase"
+                    className="group/action text-whd-pink-bright mt-3 gap-1.5 text-sm font-semibold tracking-wider uppercase hover:text-white"
                   >
                     {row.action.text}
                     <svg
@@ -89,13 +86,11 @@ export default function InfoCards() {
                     </svg>
                   </LinkButton>
                 )}
-              </div>
-            </div>
+              </NeonPanel>
+            </NeonFrame>
           </motion.div>
-        </div>
-      ))}
-
-      <Separator />
+        ))}
+      </div>
     </section>
   );
 }

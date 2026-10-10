@@ -1,0 +1,25 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="134" height="636" viewBox="0 0 134 636" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="left">
+<path id="Line 1" d="M110 48L110 588" stroke="#FD5CC3" stroke-width="6" stroke-linecap="square"/>
+<path id="Line 2" d="M3 24H86" stroke="#FD5CC3" stroke-width="6" stroke-linecap="square"/>
+<path id="Line 4" d="M3 220H86" stroke="#FD5CC3" stroke-width="6" stroke-linecap="square"/>
+<path id="Line 5" d="M3 416H86" stroke="#FD5CC3" stroke-width="6" stroke-linecap="square"/>
+<path id="Line 6" d="M3 612H86" stroke="#FD5CC3" stroke-width="6" stroke-linecap="square"/>
+<g id="Frame 1000004793">
+<rect x="86" width="48" height="48" rx="24" fill="#FD5CC3"/>
+<circle id="Ellipse 6" cx="110" cy="24" r="16" fill="#602AAF"/>
+</g>
+<g id="Frame 1000004795">
+<rect x="86" y="196" width="48" height="48" rx="24" fill="#FD5CC3"/>
+<circle id="Ellipse 6_2" cx="110" cy="220" r="16" fill="#602AAF"/>
+</g>
+<g id="Frame 1000004797">
+<rect x="86" y="392" width="48" height="48" rx="24" fill="#FD5CC3"/>
+<circle id="Ellipse 6_3" cx="110" cy="416" r="16" fill="#602AAF"/>
+</g>
+<g id="Frame 1000004799">
+<rect x="86" y="588" width="48" height="48" rx="24" fill="#FD5CC3"/>
+<circle id="Ellipse 6_4" cx="110" cy="612" r="16" fill="#602AAF"/>
+</g>
+</g>
+</svg>

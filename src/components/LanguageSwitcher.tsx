@@ -40,7 +40,9 @@ export function LanguageSwitcher({
             className={cn(
               'cursor-pointer rounded-lg font-medium transition-all duration-200',
               size === 'sm' ? 'px-2.5 py-1 text-xs' : 'flex-1 px-3 py-1.5 text-sm',
-              isActive ? 'text-whd-pink bg-white' : 'bg-white/10 text-white hover:bg-white/25',
+              isActive
+                ? 'bg-whd-pink text-whd-purple-deep shadow-[0_0_14px_rgb(253_92_195/0.5)]'
+                : 'bg-white/10 text-white hover:bg-white/20',
             )}
           >
             {languageNames[lng]}

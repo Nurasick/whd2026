@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'motion/react';
-import { Card, CardContent } from '@/components/ui/card';
 import DecryptedText from '@/components/landing/DecryptedText';
+import { NeonFrame, NeonPanel } from '@/components/ui/neon';
 import { parseTextWithLinks } from '@/lib/text';
 
 export default function About() {
@@ -14,10 +14,10 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="bg-whd-dark py-20 md:py-28">
-      <div className="mx-auto max-w-[100rem] px-6 sm:px-8 lg:px-12">
+    <section id="about" className="py-16 md:py-24">
+      <div className="mx-auto max-w-[90rem] px-4 sm:px-8 lg:px-12">
         {/* Highlights */}
-        <div className="mb-16 grid grid-cols-1 gap-6 md:mb-24 md:grid-cols-3 md:gap-8">
+        <div className="mb-16 grid grid-cols-1 gap-4 md:mb-24 md:grid-cols-3">
           {highlights.map((item, index) => (
             <motion.div
               key={item.text}
@@ -26,24 +26,27 @@ export default function About() {
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="h-full">
-                <CardContent>
-                  <div className="text-whd-pink-bright mb-2 flex flex-wrap items-baseline gap-x-2 text-4xl leading-none font-black md:text-6xl">
-                    <DecryptedText
-                      text={item.number}
-                      animateOn="view"
-                      sequential
-                      encryptedClassName="text-whd-pink/50"
-                    />
-                    {item.unit && (
-                      <span className="text-2xl font-bold md:text-3xl">{item.unit}</span>
-                    )}
-                  </div>
-                  <div className="group-hover/card:text-whd-pink-soft mt-2 text-lg font-light text-white transition-colors md:text-xl">
-                    {item.text}
-                  </div>
-                </CardContent>
-              </Card>
+              <NeonFrame interactive className="h-full">
+                <NeonPanel
+                  position="top"
+                  className="neon-text flex flex-1 items-center justify-center gap-x-2 px-4 py-5 text-[clamp(2.25rem,1.4rem+2.2vw,4rem)] leading-none font-extrabold whitespace-nowrap text-white"
+                >
+                  <DecryptedText
+                    text={item.number}
+                    animateOn="view"
+                    sequential
+                    encryptedClassName="text-whd-pink-bright/70"
+                    parentClassName="whitespace-pre!"
+                  />
+                  {item.unit && <span className="text-[0.5em] font-bold">{item.unit}</span>}
+                </NeonPanel>
+                <NeonPanel
+                  position="bottom"
+                  className="neon-text px-4 pt-1 pb-2 text-center text-lg font-semibold text-white lowercase md:text-2xl"
+                >
+                  {item.text}
+                </NeonPanel>
+              </NeonFrame>
             </motion.div>
           ))}
         </div>
@@ -59,10 +62,8 @@ export default function About() {
           >
             <p className="section-kicker">{t('about.kicker')}</p>
 
-            <h2 className="text-3xl leading-tight font-bold text-white md:text-5xl">
-              {t('about.title')}
-              <br />
-              <span className="text-whd-pink-soft">{t('about.titleHighlight')}</span>
+            <h2 className="whd-display text-[clamp(2.25rem,1.3rem+3vw,4.5rem)]">
+              {t('about.title')} <span className="text-whd-pink">{t('about.titleHighlight')}</span>
             </h2>
 
             <p className="text-lg leading-relaxed text-white sm:text-xl md:text-2xl">
@@ -79,15 +80,18 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="relative hidden justify-center lg:flex"
           >
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[130%] -translate-x-1/2 -translate-y-1/2 bg-[url('/whd/star-glow.svg')] bg-contain bg-center bg-no-repeat"
+            />
             <img
               src="/images/about.svg"
               alt={t('about.imageAlt')}
               width={800}
               height={800}
               loading="lazy"
-              className="z-10 w-full max-w-xl"
+              className="relative z-10 w-full max-w-xl"
             />
-            <div className="bg-whd-pink/30 absolute top-1/2 left-[60%] z-0 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] blur-3xl" />
           </motion.div>
         </div>
       </div>

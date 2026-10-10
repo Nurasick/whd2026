@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { REGISTRATION_DEADLINE } from '@/lib/event';
+import { NeonFrame, NeonPanel } from '@/components/ui/neon';
 
 type TimeLeft = {
   days: number;
@@ -97,22 +98,25 @@ export default function Countdown() {
       ];
 
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col gap-3">
       <p className="section-kicker">{t('hero.countdownLabel')}</p>
 
-      <div className="flex items-center justify-center gap-3 md:gap-4">
+      <div className="grid grid-cols-4 gap-2 sm:gap-3">
         {units.map((unit, index) => (
-          <div
-            key={index}
-            className="flex w-[66px] flex-col items-center justify-center rounded-lg bg-white p-3 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl md:w-[88px] md:p-4"
-          >
-            <div className="text-whd-pink text-2xl font-bold tabular-nums md:text-4xl">
+          <NeonFrame key={index} size="sm" interactive className="sm:gap-2 sm:p-3 sm:pb-4">
+            <NeonPanel
+              position="top"
+              className="neon-text flex items-center justify-center py-2 text-[clamp(1.75rem,0.9rem+2.6vw,4rem)] leading-none font-bold text-white tabular-nums sm:py-4"
+            >
               {unit.value === null ? '--' : String(unit.value).padStart(2, '0')}
-            </div>
-            <div className="mt-1 text-[10px] font-medium text-gray-600 uppercase md:text-xs">
+            </NeonPanel>
+            <NeonPanel
+              position="bottom"
+              className="neon-text truncate px-1 pt-1 pb-1.5 text-center text-[clamp(0.75rem,0.45rem+0.9vw,2rem)] font-semibold text-white lowercase sm:pb-2"
+            >
               {unit.label}
-            </div>
-          </div>
+            </NeonPanel>
+          </NeonFrame>
         ))}
       </div>
     </div>

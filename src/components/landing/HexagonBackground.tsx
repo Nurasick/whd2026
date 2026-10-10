@@ -21,7 +21,7 @@ const HEX_CLIP = 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'
 const HEX_BASE_CLASS =
   'relative shrink-0 transition-all duration-1000 [clip-path:polygon(50%_0%,100%_25%,100%_75%,50%_100%,0%_75%,0%_25%)] before:absolute before:inset-0 before:transition-all before:duration-500 after:absolute after:bg-whd-dark after:[clip-path:polygon(50%_0%,100%_25%,100%_75%,50%_100%,0%_75%,0%_25%)] after:transition-all after:duration-500';
 
-const GLOW_COLORS = ['#BB046C', '#FF9DD5'] as const;
+const GLOW_COLORS = ['#FD5CC3', '#602AAF'] as const;
 
 interface HexCellProps {
   rowIndex: number;

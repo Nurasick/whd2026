@@ -5,14 +5,15 @@ import { cva, type VariantProps } from 'class-variance-authority';
  * non-component export there breaks React Fast Refresh.
  */
 export const buttonVariants = cva(
-  'inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap font-medium no-underline transition-all duration-300 outline-none select-none focus-visible:ring-2 focus-visible:ring-whd-pink-soft focus-visible:ring-offset-2 focus-visible:ring-offset-whd-dark disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap font-medium no-underline transition-all duration-300 outline-none select-none focus-visible:ring-2 focus-visible:ring-whd-pink-bright focus-visible:ring-offset-2 focus-visible:ring-offset-whd-dark disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        primary: 'rounded-full bg-whd-pink text-white hover:bg-whd-pink-deep hover:shadow-lg',
-        solid: 'rounded-lg bg-white text-whd-pink hover:scale-105 hover:shadow-lg',
+        primary: 'neon-button font-semibold text-white',
+        solid:
+          'rounded-xl bg-whd-pink font-semibold text-whd-purple-deep hover:bg-whd-pink-bright hover:shadow-[0_0_24px_rgb(253_92_195/0.6)]',
         outline:
-          'rounded-full border border-whd-pink/60 text-white hover:border-whd-pink hover:bg-whd-pink/10',
+          'rounded-2xl border-2 border-whd-pink/60 text-white hover:border-whd-pink hover:bg-whd-purple/40',
         ghost: 'rounded-lg text-white/80 hover:bg-white/10 hover:text-white',
         link: 'text-whd-pink-soft hover:text-whd-pink-bright',
       },

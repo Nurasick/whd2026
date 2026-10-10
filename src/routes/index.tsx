@@ -10,6 +10,7 @@ import About from '@/components/landing/About';
 import Timeline from '@/components/landing/Timeline';
 import Schedule from '@/components/landing/Schedule';
 import Benefits from '@/components/landing/Benefits';
+import Gallery from '@/components/landing/Gallery';
 import FAQ from '@/components/landing/FAQ';
 import Partners from '@/components/landing/Partners';
 import Footer from '@/components/landing/Footer';
@@ -46,7 +47,7 @@ function LandingPage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div ref={containerRef} className="bg-whd-dark relative min-h-screen">
+    <div ref={containerRef} className="bg-whd-dark whd-grid-bg relative min-h-screen">
       {/* Cursor trail — pointer-driven, so desktop only */}
       <div className="pointer-events-none fixed inset-0 z-50 hidden md:block">
         <Suspense fallback={null}>
@@ -55,7 +56,7 @@ function LandingPage() {
             trailSize={0.03}
             maxAge={120}
             interpolate={1}
-            color="#FF9DD5"
+            color="#FD5CC3"
             gooeyEnabled={false}
             eventSource={containerRef}
             eventPrefix="client"
@@ -69,9 +70,10 @@ function LandingPage() {
       <About />
       <Timeline />
       <Schedule />
-      <Benefits />
-      <FAQ />
       <Partners />
+      <Benefits />
+      <Gallery />
+      <FAQ />
       <Footer session={session} />
     </div>
   );

@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/lexend';
+@import '@fontsource-variable/montserrat';
 @import '@fontsource-variable/jetbrains-mono';
 
 /* Kazakh Cyrillic characters missing from fontsource's cyrillic-ext subset.
@@ -18,33 +20,47 @@
 /* ===== Women's Hack Day Theme ===== */
 
 :root {
-  /* WHD brand colors */
-  --whd-pink: #bb046c;
-  --whd-pink-deep: #a00359;
-  --whd-pink-soft: #da649c;
-  --whd-pink-bright: #ff9dd5;
+  /* WHD brand colors — the neon pink frame and violet panel from the 2026 design */
+  --whd-pink: #fd5cc3;
+  --whd-pink-deep: #e43fac;
+  --whd-pink-soft: #fd8ad5;
+  --whd-pink-bright: #ffb8e8;
+  --whd-purple: #602aaf;
+  --whd-purple-deep: #4b2091;
+  --whd-purple-soft: #7a45c9;
 
   /* Surfaces */
-  --whd-dark: #000000;
-  --whd-surface: #18181b;
-  --whd-surface-raised: #27272a;
-  --whd-border: #27272a;
+  --whd-dark: #0e0e13;
+  --whd-surface: #17131f;
+  --whd-surface-raised: #221a30;
+  --whd-border: #30254a;
 
   /* Text */
   --whd-text: #ffffff;
-  --whd-text-muted: #a1a1aa;
+  --whd-text-muted: #b9b1cc;
   --whd-text-dim: #6c6c6c;
 
-  --whd-radius: 1rem;
+  --whd-radius: 1.25rem;
+
+  /* The neon frame: hairline inner bevel plus a pink-to-violet halo */
+  --whd-bevel: inset 0 -4px 4px rgb(0 0 0 / 0.25), inset 0 4px 4px rgb(0 0 0 / 0.25);
+  --whd-halo: 0 0 32px rgb(253 92 195 / 0.55), 0 18px 48px rgb(96 42 175 / 0.6);
+  --whd-halo-strong: 0 0 44px rgb(253 92 195 / 0.75), 0 22px 60px rgb(96 42 175 / 0.75);
 }
 
 @theme inline {
-  --font-sans: 'JetBrains Mono Variable', monospace;
+  /* Lexend has no Cyrillic; Montserrat (cyrillic-ext covers ӘҒҚҢҰҺ) fills in
+     per glyph, so ru/kk text never drops to a system font. */
+  --font-sans: 'Lexend Variable', 'Montserrat Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
 
   --color-whd-pink: var(--whd-pink);
   --color-whd-pink-deep: var(--whd-pink-deep);
   --color-whd-pink-soft: var(--whd-pink-soft);
   --color-whd-pink-bright: var(--whd-pink-bright);
+  --color-whd-purple: var(--whd-purple);
+  --color-whd-purple-deep: var(--whd-purple-deep);
+  --color-whd-purple-soft: var(--whd-purple-soft);
 
   --color-whd-dark: var(--whd-dark);
   --color-whd-surface: var(--whd-surface);
@@ -62,18 +78,145 @@ html {
   scroll-behavior: smooth;
   overflow-x: hidden;
   /* Offset anchor scrolling so sections clear the fixed header */
-  scroll-padding-top: 6rem;
+  scroll-padding-top: 7rem;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
   overflow-x: hidden;
-  font-family: 'JetBrains Mono Variable', monospace;
+  font-family: var(--font-sans);
   background-color: var(--whd-dark);
   color: var(--whd-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Faint blueprint grid from the design, tiled down the page and overlaid */
+.whd-grid-bg {
+  isolation: isolate;
+}
+.whd-grid-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url('/whd/bg-grid.svg');
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: max(2058px, 107%) auto;
+  opacity: 0.1;
+}
+
+/* ===== Neon components ===== */
+
+@layer components {
+  /* Outer pink frame. Children are .neon-panel blocks separated by the frame colour. */
+  .neon-frame {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 12px 16px;
+    border-radius: 20px;
+    background-color: var(--whd-pink);
+    box-shadow: var(--whd-bevel), var(--whd-halo);
+    transition:
+      box-shadow 300ms ease,
+      transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .neon-frame-sm {
+    padding: 8px 8px 10px;
+    gap: 6px;
+    border-radius: 16px;
+  }
+  .neon-frame-flat {
+    box-shadow: var(--whd-bevel);
+  }
+  .neon-frame-interactive:hover,
+  .neon-frame-interactive:focus-within {
+    box-shadow: var(--whd-bevel), var(--whd-halo-strong);
+    transform: translateY(-3px);
+  }
+
+  /* Violet panel inside a frame. Top/bottom variants square off the shared edge. */
+  .neon-panel {
+    position: relative;
+    border-radius: 12px;
+    background-color: var(--whd-purple);
+    box-shadow: inset 0 4px 12px rgb(0 0 0 / 0.25);
+  }
+  /* Grey secondary text vanishes on violet; lift it to translucent white there. */
+  .neon-panel,
+  [data-slot='card'] {
+    --whd-text-muted: rgb(255 255 255 / 0.8);
+    --whd-text-dim: rgb(255 255 255 / 0.6);
+  }
+  .neon-panel-top {
+    border-radius: 12px 12px 0 0;
+  }
+  .neon-panel-bottom {
+    border-radius: 0 0 12px 12px;
+    box-shadow: inset 0 -4px 12px rgb(0 0 0 / 0.25);
+  }
+  .neon-frame-sm .neon-panel {
+    border-radius: 10px;
+  }
+  .neon-frame-sm .neon-panel-top {
+    border-radius: 10px 10px 0 0;
+  }
+  .neon-frame-sm .neon-panel-bottom {
+    border-radius: 0 0 10px 10px;
+  }
+
+  /* Single-element version of the frame for buttons: the pink border is the frame. */
+  .neon-button {
+    border: 5px solid var(--whd-pink);
+    border-radius: 18px;
+    background-color: var(--whd-purple);
+    box-shadow:
+      inset 0 4px 12px rgb(0 0 0 / 0.3),
+      var(--whd-halo);
+    text-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
+    transition:
+      box-shadow 300ms ease,
+      background-color 200ms ease,
+      transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .neon-button:hover {
+    background-color: var(--whd-purple-soft);
+    box-shadow:
+      inset 0 4px 12px rgb(0 0 0 / 0.2),
+      var(--whd-halo-strong);
+    transform: translateY(-2px);
+  }
+  .neon-button:active {
+    transform: translateY(1px);
+    box-shadow:
+      inset 0 6px 14px rgb(0 0 0 / 0.4),
+      var(--whd-halo);
+  }
+
+  .neon-text {
+    text-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
+  }
+
+  /* Oversized left-aligned section titles */
+  .whd-display {
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    color: var(--whd-text);
+    text-wrap: balance;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neon-frame-interactive:hover,
+  .neon-frame-interactive:focus-within {
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -114,7 +257,7 @@ body {
 
 /* Soft pink halo used behind illustrations and cards */
 .whd-glow {
-  box-shadow: 0px 5px 80px 0px rgba(187, 4, 108, 0.4);
+  box-shadow: 0px 5px 80px 0px rgba(253, 92, 195, 0.4);
 }
 
 .gradient-text-primary {
@@ -140,7 +283,7 @@ body {
 
 /* Section eyebrow label — the small centred kicker above every section title */
 .section-kicker {
-  font-size: 0.75rem;
+  font-size: clamp(0.75rem, 0.65rem + 0.25vw, 0.95rem);
   font-weight: 600;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -163,14 +306,14 @@ body {
 }
 
 ::selection {
-  background: rgba(187, 4, 108, 0.45);
+  background: rgba(253, 92, 195, 0.45);
   color: #ffffff;
 }
 
 /* Admin report: flash a row after jumping to it from the other tab */
 .admin-highlight {
-  background-color: rgb(187 4 108 / 0.12);
-  outline: 1px solid rgb(255 157 213 / 0.4);
+  background-color: rgb(253 92 195 / 0.12);
+  outline: 1px solid rgb(255 184 232 / 0.4);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -181,11 +324,22 @@ body {
 
 @keyframes admin-row-highlight {
   0% {
-    background-color: rgb(187 4 108 / 0.3);
-    outline-color: rgb(255 157 213 / 0.5);
+    background-color: rgb(253 92 195 / 0.3);
+    outline-color: rgb(255 184 232 / 0.5);
   }
   100% {
-    background-color: rgb(187 4 108 / 0);
-    outline-color: rgb(255 157 213 / 0);
+    background-color: rgb(253 92 195 / 0);
+    outline-color: rgb(255 184 232 / 0);
+  }
+}
+
+/* Hero mascot: a slow bob so the star feels alive without pulling focus */
+@keyframes whd-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(1.2deg);
   }
 }

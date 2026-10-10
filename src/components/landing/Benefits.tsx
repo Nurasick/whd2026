@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'motion/react';
-import { Card, CardContent } from '@/components/ui/card';
 import SectionHeading from '@/components/landing/SectionHeading';
+import { NeonFrame, NeonPanel } from '@/components/ui/neon';
 
 const BENEFIT_KEYS = [
   'prizePool',
@@ -16,36 +16,28 @@ export default function Benefits() {
   const { t } = useTranslation();
 
   return (
-    <section id="benefits" className="bg-whd-dark w-full py-20 md:py-28">
-      <div className="mx-auto max-w-[100rem] px-6 sm:px-8 lg:px-12">
+    <section id="benefits" className="w-full py-16 md:py-24">
+      <div className="mx-auto max-w-[90rem] px-4 sm:px-8 lg:px-12">
         <SectionHeading
           kicker={t('benefits.kicker')}
           title={t('benefits.title')}
-          className="mb-14 md:mb-16"
+          className="mb-10 md:mb-14"
         />
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-x-4 md:gap-y-6">
           {BENEFIT_KEYS.map((benefitKey, index) => (
             <motion.div
               key={benefitKey}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
+              transition={{ duration: 0.5, delay: index * 0.06 }}
             >
-              <Card className="h-full">
-                <CardContent className="flex h-full items-start gap-4">
-                  <span
-                    aria-hidden="true"
-                    className="text-whd-pink-bright mt-1 text-sm font-bold tabular-nums"
-                  >
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <p className="text-base leading-relaxed text-white md:text-lg">
-                    {t(`benefits.${benefitKey}`)}
-                  </p>
-                </CardContent>
-              </Card>
+              <NeonFrame interactive className="h-full">
+                <NeonPanel className="neon-text flex h-full items-center justify-center gap-3 px-4 py-4 text-center text-[clamp(1.1rem,0.8rem+0.9vw,2rem)] leading-snug font-semibold text-white lowercase">
+                  {t(`benefits.${benefitKey}`)}
+                </NeonPanel>
+              </NeonFrame>
             </motion.div>
           ))}
         </div>

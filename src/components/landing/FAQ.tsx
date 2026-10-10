@@ -2,6 +2,7 @@ import { useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'motion/react';
 import { Separator } from '@/components/ui/separator';
+import { NeonFrame, NeonPanel } from '@/components/ui/neon';
 import SectionHeading from '@/components/landing/SectionHeading';
 import { parseTextWithLinks } from '@/lib/text';
 
@@ -25,45 +26,42 @@ function FAQItem({ questionKey }: { questionKey: string }) {
   const panelId = useId();
 
   return (
-    <div className="space-y-2">
-      <div className="bg-whd-surface-raised hover:bg-whd-surface-raised/80 rounded-2xl shadow-md transition-colors duration-200">
+    <NeonFrame interactive>
+      <NeonPanel position={isOpen ? 'top' : 'full'}>
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           aria-expanded={isOpen}
           aria-controls={panelId}
-          className="flex w-full cursor-pointer items-center justify-between gap-4 p-4 pl-6 text-left text-base font-light text-white md:text-xl"
+          className="neon-text flex w-full cursor-pointer items-center justify-between gap-4 rounded-[inherit] px-4 py-3 text-left text-[clamp(1.05rem,0.85rem+0.6vw,1.75rem)] text-white outline-none focus-visible:ring-2 focus-visible:ring-white/70 md:py-4"
         >
           <span>{t(`faq.questions.${questionKey}.q`)}</span>
           <svg
             width="18"
-            height="10"
-            viewBox="0 0 18 10"
+            height="12"
+            viewBox="0 0 18.431 11.787"
             fill="none"
             aria-hidden="true"
-            className={`text-whd-pink-bright shrink-0 transition-transform duration-300 ${
-              isOpen ? '' : 'rotate-180'
-            }`}
+            className={`shrink-0 transition-transform duration-300 ${isOpen ? '' : 'rotate-180'}`}
           >
             <path
-              d="M1 9L9 1L17 9"
+              d="M2 9.787 9.483 2.787 16.431 9.787"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="4"
               strokeLinecap="round"
-              strokeLinejoin="round"
             />
           </svg>
         </button>
-      </div>
+      </NeonPanel>
 
       {isOpen && (
-        <div id={panelId} className="bg-whd-surface rounded-2xl p-4 pl-6 shadow-md">
-          <div className="text-whd-text-muted text-base leading-relaxed font-light md:text-lg">
+        <NeonPanel position="bottom" id={panelId} className="px-4 pt-2 pb-4">
+          <div className="neon-text [&_a]:text-whd-pink-bright text-base leading-relaxed text-white/90 md:text-lg [&_a]:underline">
             {parseTextWithLinks(t(`faq.questions.${questionKey}.a`))}
           </div>
-        </div>
+        </NeonPanel>
       )}
-    </div>
+    </NeonFrame>
   );
 }
 
@@ -71,12 +69,12 @@ export default function FAQ() {
   const { t } = useTranslation();
 
   return (
-    <section id="faq" className="bg-whd-dark w-full py-20 md:py-28">
-      <div className="mx-auto max-w-5xl px-6 sm:px-8 lg:px-12">
+    <section id="faq" className="w-full py-16 md:py-24">
+      <div className="mx-auto max-w-[90rem] px-4 sm:px-8 lg:px-12">
         <SectionHeading
           kicker={t('faq.kicker')}
           title={t('faq.title')}
-          className="mb-14 md:mb-16"
+          className="mb-10 md:mb-14"
         />
 
         <div className="space-y-10">
@@ -90,10 +88,10 @@ export default function FAQ() {
             >
               <div className="mb-4 flex items-center gap-3">
                 <span className="section-kicker">{t(`faq.categories.${category.key}`)}</span>
-                <Separator className="flex-1" />
+                <Separator className="bg-whd-pink/40 flex-1" />
               </div>
 
-              <div className="space-y-3">
+              <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
                 {category.questions.map((questionKey) => (
                   <FAQItem key={questionKey} questionKey={questionKey} />
                 ))}

@@ -92,7 +92,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: 'og:url', content: 'https://whd.nuacmw.kz' },
       { property: 'og:image', content: '/WHDlogo.svg' },
-      { name: 'theme-color', content: '#bb046c' },
+      { name: 'theme-color', content: '#0e0e13' },
     ],
     links: [
       { rel: 'stylesheet', href: appCss },

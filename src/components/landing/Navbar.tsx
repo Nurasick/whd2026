@@ -11,6 +11,8 @@ const NAV_LINKS = [
   { href: '#about', labelKey: 'navbar.about' },
   { href: '#schedule', labelKey: 'navbar.schedule' },
   { href: '#partners', labelKey: 'navbar.partners' },
+  { href: '#benefits', labelKey: 'navbar.benefits' },
+  { href: '#gallery', labelKey: 'navbar.gallery' },
   { href: '#faq', labelKey: 'navbar.faq' },
 ] as const;
 
@@ -22,30 +24,43 @@ export default function Navbar({ session }: { session: Session }) {
   const ctaLabel = isLoggedIn ? t('navbar.dashboard') : t('navbar.register');
 
   return (
-    <header className="bg-whd-pink/95 fixed inset-x-0 top-0 z-50 w-full shadow-lg backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-[95rem] items-center justify-between px-6 sm:px-8 lg:px-12">
+    <header className="bg-whd-dark/70 fixed inset-x-0 top-0 z-50 w-full backdrop-blur-[20px]">
+      <div className="mx-auto flex h-20 max-w-[90rem] items-center justify-between px-4 sm:px-8 lg:h-24 lg:px-12">
         {/* Logo */}
         <a href="#top" className="flex items-center" aria-label="Women’s Hack Day">
-          <img src="/WHDlogo.svg" alt="" aria-hidden="true" className="h-10 w-10" />
+          <img
+            src="/whd/logo.webp"
+            alt=""
+            aria-hidden="true"
+            width={200}
+            height={101}
+            className="h-12 w-auto transition-transform duration-300 hover:-rotate-3 lg:h-16"
+          />
         </a>
 
         {/* Desktop navigation */}
-        <nav className="hidden items-center gap-x-6 text-base text-white uppercase md:flex lg:gap-x-8">
+        <nav className="hidden items-center gap-x-1 text-white lg:flex xl:gap-x-2">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="no-underline transition-all duration-200 hover:underline hover:decoration-1 hover:underline-offset-4"
+              className="hover:text-whd-pink-bright rounded-full px-4 py-2.5 text-base no-underline transition-colors duration-200 hover:bg-white/10 focus-visible:bg-white/10 focus-visible:outline-none xl:px-5 xl:text-lg"
             >
               {t(link.labelKey)}
             </a>
           ))}
 
-          <Link to={ctaTo} className={cn(buttonVariants({ variant: 'solid', size: 'sm' }))}>
+          <Link
+            to={ctaTo}
+            className={cn(
+              buttonVariants({ variant: 'primary', size: 'sm' }),
+              'ml-2 px-5 py-2 text-base',
+            )}
+          >
             {ctaLabel}
           </Link>
 
-          <LanguageSwitcher />
+          <LanguageSwitcher className="ml-3" />
         </nav>
 
         {/* Mobile hamburger */}
@@ -55,7 +70,7 @@ export default function Navbar({ session }: { session: Session }) {
           onClick={() => setIsOpen(!isOpen)}
           aria-expanded={isOpen}
           aria-label={t('navbar.toggleMenu')}
-          className="hover:bg-whd-pink-deep flex flex-col items-center justify-center gap-1.5 md:hidden"
+          className="flex flex-col items-center justify-center gap-1.5 lg:hidden"
         >
           <span
             className={`block h-0.5 w-6 bg-white transition-all duration-300 ${
@@ -76,20 +91,20 @@ export default function Navbar({ session }: { session: Session }) {
       </div>
 
       {/* Mobile dropdown */}
-      <div className="absolute inset-x-0 top-full md:hidden">
+      <div className="absolute inset-x-0 top-full lg:hidden">
         <div
           className={`grid overflow-hidden transition-all duration-300 ease-in-out ${
             isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
           }`}
         >
           <div className="overflow-hidden">
-            <div className="border-whd-pink-deep bg-whd-pink space-y-1 border-t px-4 py-3 shadow-lg">
+            <div className="border-whd-pink bg-whd-purple-deep space-y-1 border-y-4 px-4 py-3 shadow-[0_18px_40px_rgb(96_42_175/0.6)]">
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="hover:bg-whd-pink-deep block rounded-lg px-3 py-2 text-base font-medium text-white no-underline transition-all duration-200 hover:translate-x-1"
+                  className="hover:bg-whd-purple block rounded-lg px-3 py-2 text-base font-medium text-white no-underline transition-all duration-200 hover:translate-x-1"
                 >
                   {t(link.labelKey)}
                 </a>
@@ -100,10 +115,10 @@ export default function Navbar({ session }: { session: Session }) {
               <Link
                 to={ctaTo}
                 onClick={() => setIsOpen(false)}
-                className={cn(buttonVariants({ variant: 'solid' }), 'w-full')}
+                className={cn(buttonVariants({ variant: 'primary' }), 'w-full')}
               >
                 {ctaLabel}
-              </Link>{' '}
+              </Link>
             </div>
           </div>
         </div>
