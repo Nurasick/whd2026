@@ -70,7 +70,18 @@ export function getAuth() {
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ secret: gasSecret, action: 'send-otp', email, otp, type }),
             });
-            if (!res.ok) console.error(`[OTP] mail webhook returned HTTP ${res.status}`);
+            if (!res.ok) {
+              console.error(`[OTP] mail webhook returned HTTP ${res.status}`);
+              return;
+            }
+            // Apps Script answers 200 even on failure; the verdict is in the body.
+            const result = (await res.json().catch(() => null)) as {
+              ok?: boolean;
+              error?: string;
+            } | null;
+            if (!result?.ok) {
+              console.error(`[OTP] mail webhook failed: ${result?.error ?? 'non-JSON response'}`);
+            }
           } catch (err) {
             console.error('[OTP] failed to call mail webhook:', err);
           }
