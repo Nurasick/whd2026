@@ -1,4 +1,3 @@
-import { Suspense, lazy, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
 import { getRequest } from '@tanstack/react-start/server';
@@ -14,15 +13,12 @@ import Gallery from '@/components/landing/Gallery';
 import FAQ from '@/components/landing/FAQ';
 import Partners from '@/components/landing/Partners';
 import Footer from '@/components/landing/Footer';
+import StarTrail from '@/components/landing/StarTrail';
 import { getSession } from '@/lib/auth.server';
 import { getParticipant } from '@/lib/onboarding.server';
 import { getTeamByParticipant } from '@/lib/team.server';
 import { MIN_TEAM_SIZE } from '@/db/schema';
 import type { NextStep } from '@/lib/next-step';
-
-// WebGL-backed and decorative — split out so it never blocks first paint,
-// and never runs during SSR.
-const PixelTrail = lazy(() => import('@/components/landing/PixelTrail'));
 
 /** The session, plus where this visitor is in the sign-up funnel. */
 const getLandingState = createServerFn({ method: 'GET' }).handler(async () => {
@@ -44,25 +40,11 @@ export const Route = createFileRoute('/')({
 
 function LandingPage() {
   const { session, nextStep } = Route.useLoaderData();
-  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div ref={containerRef} className="bg-whd-dark whd-grid-bg relative min-h-screen">
-      {/* Cursor trail — pointer-driven, so desktop only */}
-      <div className="pointer-events-none fixed inset-0 z-50 hidden md:block">
-        <Suspense fallback={null}>
-          <PixelTrail
-            gridSize={60}
-            trailSize={0.03}
-            maxAge={120}
-            interpolate={1}
-            color="#FD5CC3"
-            gooeyEnabled={false}
-            eventSource={containerRef}
-            eventPrefix="client"
-          />
-        </Suspense>
-      </div>
+    <div className="bg-whd-dark whd-grid-bg relative min-h-screen">
+      {/* Neon star cursor trail — mouse only */}
+      <StarTrail />
 
       <Navbar session={session} />
       <Hero nextStep={nextStep} />
