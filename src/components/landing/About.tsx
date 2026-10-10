@@ -82,13 +82,13 @@ export default function About() {
           >
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[130%] -translate-x-1/2 -translate-y-1/2 bg-[url('/whd/star-glow.svg')] bg-contain bg-center bg-no-repeat"
+              className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[130%] -translate-x-1/2 -translate-y-1/2 bg-[url('/whd/star-glow.webp')] bg-contain bg-center bg-no-repeat"
             />
             <img
-              src="/images/about.svg"
+              src="/images/about.webp"
               alt={t('about.imageAlt')}
-              width={800}
-              height={800}
+              width={1200}
+              height={997}
               loading="lazy"
               className="relative z-10 w-full max-w-xl"
             />

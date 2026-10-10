@@ -102,7 +102,7 @@ body {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: url('/whd/bg-grid.svg');
+  background-image: url('/whd/bg-grid.webp');
   background-repeat: repeat-y;
   background-position: top center;
   background-size: max(2058px, 107%) auto;

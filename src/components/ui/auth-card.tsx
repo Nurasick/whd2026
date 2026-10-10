@@ -18,7 +18,7 @@ export function AuthCard({
       {/* Star glow, echoing the landing hero */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[min(900px,140vw)] -translate-x-1/2 -translate-y-1/2 bg-[url('/whd/star-glow.svg')] bg-contain bg-center bg-no-repeat opacity-70"
+        className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[min(900px,140vw)] -translate-x-1/2 -translate-y-1/2 bg-[url('/whd/star-glow.webp')] bg-contain bg-center bg-no-repeat opacity-70"
       />
 
       <NeonFrame className={cn('relative w-full max-w-md', className)}>

@@ -13,7 +13,7 @@ export default function Hero({ nextStep }: { nextStep: NextStep }) {
       {/* Pink star glow bleeding off the top-right corner, as in the design */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-[12%] -right-[30%] aspect-square w-[min(1500px,120vw)] bg-[url('/whd/star-glow.svg')] bg-contain bg-center bg-no-repeat md:-right-[18%]"
+        className="pointer-events-none absolute -top-[12%] -right-[30%] aspect-square w-[min(1500px,120vw)] bg-[url('/whd/star-glow.webp')] bg-contain bg-center bg-no-repeat md:-right-[18%]"
       />
 
       <div className="relative z-10 mx-auto grid w-full max-w-[90rem] grid-cols-1 items-center gap-6 px-4 sm:px-8 lg:grid-cols-[minmax(0,40rem)_minmax(0,1fr)] lg:gap-4 lg:px-12">
@@ -59,7 +59,7 @@ export default function Hero({ nextStep }: { nextStep: NextStep }) {
           className="relative order-1 mx-auto w-full max-w-[22rem] sm:max-w-md lg:order-none lg:mr-[-6%] lg:max-w-none"
         >
           <img
-            src="/whd/hero-art.svg"
+            src="/whd/hero-art.webp"
             alt={t('hero.imageAlt')}
             width={965}
             height={951}

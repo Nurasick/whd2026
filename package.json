@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite dev --port 3001",
+    "dev": "vite dev --port 3001 --strictPort",
     "build": "vite build",
     "preview": "npm run build && vite preview",
     "deploy": "npm install && npm run build && wrangler deploy",

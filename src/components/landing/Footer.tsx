@@ -22,7 +22,7 @@ export default function Footer({ session }: { session: Session }) {
       <div className="relative mx-auto max-w-[90rem] overflow-x-clip px-4 py-16 sm:px-8 md:py-24 lg:px-12">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[min(900px,130vw)] -translate-x-1/2 -translate-y-1/2 bg-[url('/whd/star-glow.svg')] bg-contain bg-center bg-no-repeat opacity-60"
+          className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[min(900px,130vw)] -translate-x-1/2 -translate-y-1/2 bg-[url('/whd/star-glow.webp')] bg-contain bg-center bg-no-repeat opacity-60"
         />
 
         <div className="relative mx-auto flex max-w-[40rem] flex-col items-center gap-8 text-center">

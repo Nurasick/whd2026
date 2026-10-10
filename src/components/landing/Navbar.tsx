@@ -24,7 +24,7 @@ export default function Navbar({ session }: { session: Session }) {
   const ctaLabel = isLoggedIn ? t('navbar.dashboard') : t('navbar.register');
 
   return (
-    <header className="bg-whd-dark/70 fixed inset-x-0 top-0 z-50 w-full backdrop-blur-[20px]">
+    <header className="bg-whd-dark/90 fixed inset-x-0 top-0 z-50 w-full">
       <div className="mx-auto flex h-20 max-w-[90rem] items-center justify-between px-4 sm:px-8 lg:h-24 lg:px-12">
         {/* Logo */}
         <a href="#top" className="flex items-center" aria-label="Women’s Hack Day">

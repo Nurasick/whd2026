@@ -18,7 +18,7 @@ export function AdminHeader({
   const { t } = useTranslation();
 
   return (
-    <header className="border-whd-pink/40 bg-whd-dark/75 sticky top-0 z-50 w-full border-b backdrop-blur-[20px]">
+    <header className="border-whd-pink/40 bg-whd-dark/90 sticky top-0 z-50 w-full border-b">
       <div className="mx-auto flex h-16 max-w-[100rem] items-center justify-between gap-3 px-4 sm:px-8 lg:px-12">
         <div className="flex min-w-0 items-center gap-2 sm:gap-4">
           <Link to="/" className="flex shrink-0 items-center" aria-label="Women’s Hack Day">

@@ -21,7 +21,7 @@ export function AuthHeader({
   };
 
   return (
-    <header className="border-whd-pink/40 bg-whd-dark/75 sticky top-0 z-50 w-full border-b backdrop-blur-[20px]">
+    <header className="border-whd-pink/40 bg-whd-dark/90 sticky top-0 z-50 w-full border-b">
       <div className="mx-auto flex h-16 max-w-[90rem] items-center justify-between px-4 sm:px-8 lg:px-12">
         <Link to="/" className="flex items-center" aria-label="Women’s Hack Day">
           <img
