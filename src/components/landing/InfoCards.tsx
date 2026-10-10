@@ -6,8 +6,8 @@ import { NeonFrame, NeonPanel } from '@/components/ui/neon';
 import { VENUE_MAP_URL } from '@/lib/event';
 
 /**
- * The "When / Where / How" band: three neon cards that give the essentials
- * before anyone scrolls further.
+ * The "When / Where / How" band, in the timeline cards' style: a big answer on
+ * top and a one-line note beneath, so the three cards always line up.
  */
 export default function InfoCards() {
   const { t } = useTranslation();
@@ -43,11 +43,14 @@ export default function InfoCards() {
             transition={{ duration: 0.5, delay: index * 0.08 }}
           >
             <NeonFrame interactive className="h-full">
-              <NeonPanel position="top" className="px-5 pt-4 pb-5">
+              <NeonPanel
+                position="top"
+                className="flex flex-1 flex-col items-center justify-center gap-2 px-4 py-5 text-center"
+              >
                 <span className="text-whd-pink-bright text-sm font-semibold tracking-[0.25em] uppercase">
                   {row.label}
                 </span>
-                <h3 className="neon-text mt-2 text-[clamp(1.75rem,1.2rem+1.6vw,3rem)] leading-tight font-bold text-white">
+                <h3 className="neon-text text-[clamp(1.75rem,1.1rem+1.5vw,3rem)] leading-tight font-bold text-balance text-white lowercase">
                   <DecryptedText
                     text={row.answer}
                     animateOn="view"
@@ -56,8 +59,11 @@ export default function InfoCards() {
                   />
                 </h3>
               </NeonPanel>
-              <NeonPanel position="bottom" className="flex-1 px-5 pt-3 pb-4">
-                <p className="text-sm leading-relaxed text-white/85 md:text-base">{row.detail}</p>
+              <NeonPanel
+                position="bottom"
+                className="neon-text flex items-center justify-center gap-2 px-4 pt-1 pb-2 text-center text-base font-semibold text-white lowercase md:text-lg"
+              >
+                <span>{row.detail}</span>
                 {row.action && (
                   <LinkButton
                     href={row.action.href}
@@ -65,9 +71,9 @@ export default function InfoCards() {
                     rel="noopener noreferrer"
                     variant="link"
                     size="none"
-                    className="group/action text-whd-pink-bright mt-3 gap-1.5 text-sm font-semibold tracking-wider uppercase hover:text-white"
+                    className="group/action text-whd-pink-bright gap-1.5 text-base font-semibold lowercase hover:text-white md:text-lg"
                   >
-                    {row.action.text}
+                    · {row.action.text}
                     <svg
                       width="14"
                       height="10"

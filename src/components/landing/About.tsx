@@ -51,49 +51,28 @@ export default function About() {
           ))}
         </div>
 
-        {/* Description + illustration */}
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
-          >
+        {/* Heading and copy side by side: the big title carries the section on its own */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6 }}
+          className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end lg:gap-16"
+        >
+          <div className="space-y-6">
             <p className="section-kicker">{t('about.kicker')}</p>
-
-            <h2 className="whd-display text-[clamp(2.25rem,1.3rem+3vw,4.5rem)]">
+            <h2 className="whd-display text-[clamp(2.5rem,1.3rem+3.6vw,5.5rem)]">
               {t('about.title')} <span className="text-whd-pink">{t('about.titleHighlight')}</span>
             </h2>
+          </div>
 
-            <p className="text-lg leading-relaxed text-white sm:text-xl md:text-2xl">
+          <div className="space-y-5 lg:pb-2">
+            <p className="text-lg leading-relaxed text-white sm:text-xl">
               {parseTextWithLinks(t('about.description'))}
             </p>
-
             <p className="text-whd-text-muted leading-relaxed">{t('about.organizers')}</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.6 }}
-            className="relative hidden justify-center lg:flex"
-          >
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[130%] -translate-x-1/2 -translate-y-1/2 bg-[url('/whd/star-glow.webp')] bg-contain bg-center bg-no-repeat"
-            />
-            <img
-              src="/images/about.webp"
-              alt={t('about.imageAlt')}
-              width={1200}
-              height={997}
-              loading="lazy"
-              className="relative z-10 w-full max-w-xl"
-            />
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

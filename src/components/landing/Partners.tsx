@@ -1,14 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'motion/react';
 import SectionHeading from '@/components/landing/SectionHeading';
-import { NeonFrame, NeonPanel } from '@/components/ui/neon';
-
-const INFO_PARTNERS = [
-  '/partners/info-1.svg',
-  '/partners/info-2.png',
-  '/partners/info-3.jpg',
-  '/partners/info-4.png',
-] as const;
 
 const reveal = {
   initial: { opacity: 0, y: 20 },
@@ -52,13 +44,9 @@ export default function Partners() {
         />
 
         {/* Sponsors — logos straight on the dark ground, as in the design */}
-        <motion.h3 {...reveal} className="section-kicker mb-6 md:mb-8">
-          {t('partners.generalSponsor')}
-        </motion.h3>
-
         <motion.div
           {...reveal}
-          className="mb-16 grid grid-cols-1 items-center gap-10 sm:grid-cols-2 md:mb-24 md:gap-16"
+          className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2 md:gap-16"
         >
           <div className="max-w-[36rem] transition-transform duration-300 hover:scale-[1.03]">
             <FreedomBrokerLogo alt={t('partners.generalSponsorAlt')} />
@@ -72,30 +60,6 @@ export default function Partners() {
             className="h-auto w-full max-w-[45rem] transition-transform duration-300 hover:scale-[1.03]"
           />
         </motion.div>
-
-        {/* Info partners — their logos need a light ground, so they sit in a white panel */}
-        <motion.h3 {...reveal} className="section-kicker mb-6 md:mb-8">
-          {t('partners.infoPartners')}
-        </motion.h3>
-
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          {INFO_PARTNERS.map((src, index) => (
-            <motion.div key={src} {...reveal} transition={{ duration: 0.6, delay: index * 0.1 }}>
-              <NeonFrame interactive>
-                <NeonPanel className="flex aspect-square items-center justify-center bg-white p-4 md:p-6 lg:p-8">
-                  <img
-                    src={src}
-                    alt={t('partners.infoPartnerAlt', { index: index + 1 })}
-                    width={300}
-                    height={150}
-                    loading="lazy"
-                    className="h-auto max-h-full w-full object-contain"
-                  />
-                </NeonPanel>
-              </NeonFrame>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   );

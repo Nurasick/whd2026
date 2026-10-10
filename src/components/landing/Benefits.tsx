@@ -3,14 +3,7 @@ import { motion } from 'motion/react';
 import SectionHeading from '@/components/landing/SectionHeading';
 import { NeonFrame, NeonPanel } from '@/components/ui/neon';
 
-const BENEFIT_KEYS = [
-  'prizePool',
-  'welcomePackage',
-  'merchandise',
-  'coffeeBreak',
-  'certificates',
-  'coaching',
-] as const;
+const BENEFIT_KEYS = ['prizePool', 'welcomePackage', 'merchandise', 'coffeeBreak'] as const;
 
 export default function Benefits() {
   const { t } = useTranslation();
